@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jsd.mapper.ClassesMapper">
+    <select id="getAllClasses" resultType="com.jsd.pojo.Classes">
+        select * from classes where del=0 limit ${startNum},${totalNum}
+    </select>
+    <select id="getClassesByid" resultType="com.jsd.pojo.Classes">
+        select * from classes where classes_id=#{classes_id} and del=0;
+    </select>
+    <insert id="addClasses" parameterType="com.jsd.pojo.Classes">
+        insert into classes (classes_name,classes_teacher,createTime,updateTime)
+        values (#{classes_name},#{classes_teacher},#{createTime},#{updateTime})
+    </insert>
+    <update id="updateClasses" parameterType="com.jsd.pojo.Classes">
+        update classes set classes_name=#{classes_name},classes_teacher=#{classes_teacher},
+                          updateTime=#{updateTime} where classes_id=#{classes_id}
+    </update>
+
+    <update id="deleteClasses">
+         update classes set del=1 where classes_id=#{classes_id}
+    </update>
+
+    <select id="queryClassesId" resultType="integer">
+        select classes_id from classes where del=0;
+    </select>
+
+    <select id="queryTotal" resultType="integer">
+        select count(*) from classes where del=0;
+    </select>
+
+</mapper>

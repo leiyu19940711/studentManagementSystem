@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jsd.mapper.StudentMapper">
+    <select id="getAllStudent" parameterType="com.jsd.po.PagingPO" resultType="com.jsd.pojo.Student">
+        select * from student where del=0 limit ${startNum},${totalNum}
+    </select>
+    <select id="getStudentByid" resultType="com.jsd.pojo.Student">
+        select * from student where student_id=#{student_id} and del=0;
+    </select>
+    <insert id="addStudent" parameterType="com.jsd.pojo.Student">
+        insert into student (student_name,student_age,student_classesId,createTime,updateTime)
+        values (#{student_name},#{student_age},#{student_classesId},#{createTime},#{updateTime})
+    </insert>
+    <update id="updateStudent" parameterType="com.jsd.pojo.Student">
+        update student set student_name=#{student_name},student_age=#{student_age},
+                          student_classesId=#{student_classesId},updateTime=#{updateTime} where student_id=#{student_id}
+    </update>
+
+
+    <update id="deleteStudent">
+         update student set del=1 where student_id=#{student_id}
+    </update>
+
+    <update id="deleteStudentByClassesId">
+        update student set del=1 where student_classesid=#{student_classesid}
+    </update>
+    <select id="queryAllStudentId" resultType="integer">
+        select student_id from student where del=0
+    </select>
+
+    <select id="queryStudentByName" resultType="com.jsd.pojo.Student">
+         select *  from student where del=0 and student_name like #{student_name}
+    </select>
+
+    <select id="queryTotal" resultType="integer">
+        select count(*) from student where del=0;
+    </select>
+
+</mapper>
